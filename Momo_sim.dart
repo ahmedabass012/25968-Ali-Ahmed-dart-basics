@@ -83,15 +83,30 @@ void main() {
   // by A.A.M.A
   print('Reg no: $regNo | D = $d | T = $t');
 
-  print(formatRwf(0));
-  print(formatRwf(999));
-  print(formatRwf(1000));
-  print(formatRwf(1250000));
-  print(formatRwf(-5000));
-
   print(isValidPin('12345'));
   print(isValidPin('77777'));
   print(isValidPin('4821'));
   print(isValidPin('48a21'));
   print(isValidPin('4821$d'));
+
+  int balance = 20000 + t * 500;
+  print('Starting balance: ${formatRwf(balance)}');
+
+  int k = 1;
+  while (k <= 3) {
+    balance = sendMoney(balance, (d + 1) * 3000);
+    k++;
+  }
+  balance = buyAirtime(balance, 1000);
+  balance = sendMoney(balance, 0);
+  balance = sendMoney(balance, 200000);
+
+  print('Final balance: ${formatRwf(balance)}');
+
+  print(formatRwf(-999));    // -999 RWF  (might break: comma right after the minus)
+  print(formatRwf(1000000)); // 1,000,000 RWF
+  print(formatRwf(-1000));   // -1,000 RWF
+  print(isValidPin('12 45')); // false (has a space)
+  print(isValidPin(''));     // false (empty PIN, might break)
+  print(isValidPin('00000')); // false (all digits the same)
 }
