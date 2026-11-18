@@ -47,6 +47,38 @@ bool isValidPin(String pin) {
   return !allSame;
 }
 
+int sendMoney(int balance, int amount) {
+  // by A.A.M.A
+  int fee = momoFee(amount);
+  if (fee == -1) {
+    print('Failed: invalid amount');
+    return balance;
+  }
+  if (amount + fee > balance) {
+    print('Failed: insufficient balance');
+    return balance;
+  }
+  int newBalance = balance - amount - fee;
+  print('Sent ${formatRwf(amount)} (fee ${formatRwf(fee)}). '
+      'New balance: ${formatRwf(newBalance)}');
+  return newBalance;
+}
+
+int buyAirtime(int balance, int amount) {
+  // by A.A.M.A
+  if (amount < 100 || amount > 50000) {
+    print('Failed: airtime amount is out of range');
+    return balance;
+  }
+  if (amount > balance) {
+    print('Failed: not enough balance for airtime');
+    return balance;
+  }
+  int newBalance = balance - amount;
+  print('Bought ${formatRwf(amount)} of airtime. New balance: ${formatRwf(newBalance)}');
+  return newBalance;
+}
+
 void main() {
   // by A.A.M.A
   print('Reg no: $regNo | D = $d | T = $t');
